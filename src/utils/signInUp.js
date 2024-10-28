@@ -1,89 +1,106 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-// import { checkvaliddata } from "./validate";
 
 const SignInUp = () => {
+  const [errorMessagename, setErrorMessagename] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [phonenumbererror, setphonenumbererror] = useState("");
+
+  const [phonenumber, setphonenumber] = useState("");
+  const validatenumber = (phonenumber) => {
+    const phoneregex =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    return phoneregex.test(phonenumber);
+  };
+
+  const [Password, setpassword] = useState("");
+  const validatepassword = (Password) => {
+    const passregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+    return passregex.test(Password);
+  };
+
+  const [email, setEmail] = useState("");
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const [name, setname] = useState("");
+  const validatename = (name) => {
+    const nameregex = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/gm;
+    return nameregex.test(name);
+  };
+
+  const handleSubmitform = (e) => {
+    e.preventDefault();
+
+    // Validate email field
+
+    if (
+      validateEmail(email) &&
+      validatepassword(Password) &&
+      validatename(name) &&
+      validatenumber(phonenumber)
+    ) {
+      setErrorMessage(""); // Clear any previous error
+      setPasswordError("");
+      window.location.reload(); // Reload the page
+    }
+
+    if (!validateEmail(email)) {
+      setErrorMessage("Please enter a valid email address!!!");
+    }
+    if (!validatepassword(Password)) {
+      setPasswordError("Please enter a valid password!!!");
+    }
+    if (!validatename(name)) {
+      setErrorMessagename("Please enter valid name!!!");
+    }
+    if (!validatenumber(phonenumber)) {
+      setphonenumbererror("Please enter a valid phone number!!!");
+    }
+
+    if (!email) {
+      setErrorMessage("Please fill out this field!!!");
+    }
+    if (!Password) {
+      setPasswordError("Please fill out this field!!!");
+    }
+    if (!name) {
+      setErrorMessagename("Please fill out this field!!!");
+    }
+    if (!phonenumber) {
+      setphonenumbererror("Please fill out this field!!!");
+    }
+  };
+  useEffect(() => {
+    document.title = "SignIn/Up";
+  }, []);
+
   const clickabout = () => {
-    document.title = "About Us";
+    window.location.reload();
   };
   const clickservices = () => {
-    document.title = "Services";
+    window.location.reload();
   };
   const clickcontact = () => {
-    document.title = "Contact";
+    window.location.reload();
   };
 
   const clickhome = () => {
-    document.title = "Home";
+    window.location.reload();
   };
 
   const [isSignIn, setSignIn] = useState(true);
-  // const [errormessage, seterrormessage] = useState();
-
-  // const email = useRef(null);
-  // const password = useRef(null);
-  // const name = useRef(null);
 
   const toggleSignInform = () => {
     setSignIn(!isSignIn);
   };
 
-  // const handleclick = () => {
-  //   //  console.log(email.current.value);
-  //   //  console.log(password.current.value);
-  //   const message = checkvaliddata(
-  //     email.current.value,
-  //     password.current.value,
-  //     name.current.value
-  //   );
-  //   console.log(message);
-  //   seterrormessage(message);
-
-  //   //Creating user
-  //   if (message) return;
-
-  //   //SIGN IN/ SIGN UP
-
-  //   if (!isSignIn) {
-  //     //sign up logic
-  //     createUserWithEmailAndPassword(
-  //       auth,
-  //       email.current.value,
-  //       password.current.value
-  //     )
-  //       .then((userCredential) => {
-  //         // Signed up
-  //         const user = userCredential.user;
-  //         console.log(user);
-  //       })
-  //       .catch((error) => {
-  //         const errorCode = error.code;
-  //         const errorMessage = error.message;
-  //         seterrormessage(errorCode + "-" + errorMessage);
-  //       })
-  //   } else {
-  //     //sign in logic
-  //     signInWithEmailAndPassword(
-  //       auth,
-  //       email.current.value,
-  //       password.current.value
-  //     )
-  //       .then((userCredential) => {
-  //         // Signed in
-  //         const user = userCredential.user;
-  //         console.log(user);
-  //       })
-  //       .catch((error) => {
-  //         const errorCode = error.code;
-  //         const errorMessage = error.message;
-  //         seterrormessage(errorCode + "-" + errorMessage);
-  //       })
-  //   }
-  // }
-
   return (
-    <div className="bg-gradient-to-b from-purple-400 to to-blue-200 w-screen h-screen">
+    <div className="bg-gradient-to-b from-purple-400 to to-blue-200 w-screen h-[900px]">
       <div
         className={` flex sticky top-0 z-50 w-full transition-all duration-300 
           
@@ -91,7 +108,7 @@ const SignInUp = () => {
       >
         <img
           alt=""
-          className="w-64 m-10 mx-32"
+          className="w-60 h-16  m-10 mx-32"
           src="https://zidio.in/assets/images/home-2/zidio.png"
         />
         <header>
@@ -136,49 +153,88 @@ const SignInUp = () => {
         </header>
       </div>
 
-      <form className="h-[670px] w-[500px] text-white px-14 absolute p-12 bg-black my-12 mx-auto right-0 left-0 rounded-3xl shadow-xl bg-opacity-80">
-        <h1 className="text-white text-3xl font-bold py-2 text-center">
-          {isSignIn ? "Sign In/Login for Start Learning" : "Sign Up for Start Learing"}
+      <form className="h-[690px] w-[500px] text-white px-14 absolute p-12 bg-black my-6 mx-auto right-0 left-0 rounded-3xl shadow-xl bg-opacity-80">
+        <h1 className="text-white text-3xl font-bold py-2 text-center mb-6">
+          {isSignIn
+            ? "Sign In/Login for Start Learning"
+            : "Sign Up for Start Learing"}
         </h1>
-       
-        {!isSignIn && (
+        <div className="">
+          {!isSignIn && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              className={`p-4 my-10 mx-5 bg-slate-200 w-[350px] rounded-lg text-black mb-4 ${
+                errorMessagename ? "border border-red-500" : "border-gray-300"
+              }`}
+              value={name}
+              onChange={(e) => setname(e.target.value)}
+              required
+            />
+          )}
+          {!isSignIn && (
+            <p className="text-red-500 text-sm mb-3 my-[-13px] mx-6 ">
+              {errorMessagename}
+            </p>
+          )}
+          {!isSignIn && (
+            <input
+              type="text"
+              placeholder="Phone Number"
+              className={`p-4 mx-5 bg-slate-200 w-[350px] rounded-lg text-black   ${
+                phonenumbererror ? "border border-red-500" : "border-gray-300"
+              }`}
+              value={phonenumber}
+              onChange={(e) => setphonenumber(e.target.value)}
+              required
+            />
+          )}
+          {!isSignIn && (
+            <p className="text-red-500 text-sm mx-6 my-1 ">
+              {phonenumbererror}
+            </p>
+          )}
+
           <input
             type="text"
-            placeholder="Phone Number"
-            className="p-4 my-10  mx-5 bg-slate-200 w-[350px] rounded-lg "
+            placeholder="Email Address"
+            className={`p-4 my-3 mx-5 text-black bg-slate-200 w-[350px] rounded-lg mb-6 ${
+              errorMessage ? "border border-red-500" : "border-gray-300"
+            }`}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
-        )}
+          {errorMessage && (
+            <p className="text-red-500 text-sm mb-5 my-[-14px] mx-6 ">
+              {errorMessage}
+            </p>
+          )}
 
-        {!isSignIn && (
           <input
             type="text"
-            placeholder="Phone Number"
-            className="p-4 mx-5 bg-slate-200 w-[350px] rounded-lg "
+            placeholder="Password"
+            className={`p-4 mx-5  bg-slate-200 text-black w-[350px] rounded-lg my-[-9px] ${
+              passwordError ? "border border-red-500" : "border-gray-300"
+            }`}
+            value={Password}
+            onChange={(e) => setpassword(e.target.value)}
+            required
           />
-        )}
+          {passwordError && (
+            <p className="text-red-500 text-sm  my-4 mx-6 ">{passwordError}</p>
+          )}
 
-
-        <input
-          type="text"
-          placeholder="Email Address"
-          className="p-4  my-10 mx-5 bg-slate-200 w-[350px] rounded-lg"
-        />
-
-        <input
-          type="text"
-          placeholder="Password"
-          className="p-4  mx-5  bg-slate-200 w-[350px] rounded-lg"
-        />
-
-        <button
-          className=" h-11 p-3 my-10 mx-32 bg-purple-500 text-white w-[130px] rounded-lg font-bold  hover:shadow-[0_0_10px_3px_rgba(255,255,255,0.8)] transition duration-600 ease-in-out"
-          
-        >
-          {isSignIn ? "Sign In" : "Sign Up"}
-        </button>
-
+          <button
+            className=" h-11 p-3 my-6 mx-32 bg-purple-500 text-white w-[130px] rounded-lg font-bold  hover:shadow-[0_0_10px_3px_rgba(255,255,255,0.8)] transition duration-600 ease-in-out"
+            type="submit"
+            onClick={handleSubmitform}
+          >
+            {isSignIn ? "Sign In" : "Sign Up"}
+          </button>
+        </div>
         <div className="flex ">
-          <p className="py-2 text-gray-400 text-sm mx-5 ">
+          <p className="py-2 text-gray-400 text-sm mx-5 my-[-3px]">
             {isSignIn ? "New to Zidio Development?" : "Already a User?"}
             <span
               onClick={toggleSignInform}

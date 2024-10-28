@@ -1,12 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Contact = () => {
   const [errorMessagename, setErrorMessagename] = useState("");
-  const [errorMessage,setErrorMessage]=useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageform, setErrorMessageform] = useState("");
 
   const [email, setEmail] = useState("");
   // const [error, setError] = useState("");
@@ -28,25 +29,45 @@ const Contact = () => {
       setErrorMessagename("");
       window.location.reload();
     }
-   if(!validatename(name)) {
+    if (!validatename(name)) {
       setErrorMessagename("Please enter a valid name!!!");
     }
-    if(!name){
-          setErrorMessagename("Please fill out this field!!!");
+    if (!name) {
+      setErrorMessagename("Please fill out this field!!!");
     }
 
-    // if (validateEmail(email)) {
-    //   console.log("Valid Email Submitted:", email);
-    //   setErrorMessagename(""); // Clear any previous error
-    //   window.location.reload(); // Reload the page
-    // }
-    // if (!email) {
-    //   setErrorMessagename("Please fill out this field!!!");
-    // } if(!validateEmail(email)){
-    //   setErrorMessagename("Please enter a valid email address.");
-    // }
+    if (validateEmail(email)) {
+      console.log("Valid Email Submitted:", email);
+      setErrorMessageform(""); // Clear any previous error
+      window.location.reload(); // Reload the page
+    }
+    if (!validateEmail(email)) {
+      setErrorMessageform("Please enter a valid email address.");
+    }
+    if (!email) {
+      setErrorMessageform("Please fill out this field!!!");
+    }
+ 
   };
 
+  const handleSubmitemailinfooter = (e) => {
+    e.preventDefault();
+
+    // Validate email field
+
+    if (validateEmail(email)) {
+      console.log("Valid Email Submitted:", email);
+      setErrorMessageform(""); // Clear any previous error
+      window.location.reload(); // Reload the page
+    }
+
+    if (!validateEmail(email)) {
+      setErrorMessageform("Please enter a valid email address.");
+    }
+    if (!email) {
+      setErrorMessageform("Please fill out this field!!!");
+    }
+  };
   const handleSubmitemail = (e) => {
     e.preventDefault();
 
@@ -60,7 +81,8 @@ const Contact = () => {
 
     if (!validateEmail(email)) {
       setErrorMessage("Please enter a valid email address.");
-    } if(!email) {
+    }
+    if (!email) {
       setErrorMessage("Please fill out this field!!!");
     }
   };
@@ -94,27 +116,34 @@ const Contact = () => {
   //   window.location.reload();  // Reloads the current page
   // };
 
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/") {
+      document.title = "Home";
+    } else if (location.pathname === "/about") {
+      document.title = "About Us";
+    } else if (location.pathname === "/contact") {
+      document.title = "Contact Us";
+    } else if (location.pathname === "/services") {
+      document.title = "Services";
+    }
+  }, [location.pathname]);
+
   const clickabout = () => {
-    document.title = "About Us";
+    // document.title = "About Us";
     window.location.reload();
   };
-  useEffect(() => {
-    document.title = "Services";
-  }, []);
+
   const clickservices = () => {
     window.location.reload();
   };
 
-  useEffect(() => {
-    document.title = "Contact"; // Set the title of the page to "Contact"
-  }, []);
-
   const clickcontact = () => {
-    window.location.reload(); // Force the page to reload when the button is clicked
+    window.location.reload();
   };
 
   const clickhome = () => {
-    document.title = "Home";
+    // document.title = "Home";
     window.location.reload();
   };
 
@@ -160,14 +189,14 @@ const Contact = () => {
         >
           <img
             alt=""
-            className="w-64 m-10 mx-32"
+            className="w-60 h-16  m-10 mx-32"
             src="https://zidio.in/assets/images/home-2/zidio.png"
           />
           <header>
             <ul className="flex mx-[240px] space-x-24 my-11">
               <li
                 className={`p-1 px-3 my-3 text-xl hover:bg-slate-200 transition-background duration-700ease-out hover:rounded-md cursor-pointer flex sticky top-0 z-50  transition-all duration-300 ${
-                  hasScrolled ? "shadow-md hover:text-black " : "bg-transparent"
+                  hasScrolled ? " hover:text-black " : "bg-transparent"
                 }`}
                 onClick={clickhome}
               >
@@ -175,7 +204,7 @@ const Contact = () => {
               </li>
               <li
                 className={`p-1 px-3 my-3 text-xl hover:bg-slate-200 transition-background duration-700ease-out hover:rounded-md cursor-pointer flex sticky top-0 z-50  transition-all duration-300 ${
-                  hasScrolled ? "shadow-md hover:text-black " : "bg-transparent"
+                  hasScrolled ? " hover:text-black " : "bg-transparent"
                 }`}
                 onClick={clickabout}
               >
@@ -183,7 +212,7 @@ const Contact = () => {
               </li>
               <li
                 className={`p-1 px-3 my-3 text-xl hover:bg-slate-200 transition-background duration-700ease-out hover:rounded-md cursor-pointer flex sticky top-0 z-50  transition-all duration-300 ${
-                  hasScrolled ? "shadow-md hover:text-black " : "bg-transparent"
+                  hasScrolled ? " hover:text-black " : "bg-transparent"
                 }`}
                 onClick={clickservices}
               >
@@ -191,7 +220,7 @@ const Contact = () => {
               </li>
               <li
                 className={`p-1 px-3 my-3 text-xl hover:bg-slate-200 transition-background duration-700ease-out hover:rounded-md cursor-pointer flex sticky top-0 z-50  transition-all duration-300 ${
-                  hasScrolled ? "shadow-md hover:text-black " : "bg-transparent"
+                  hasScrolled ? " hover:text-black " : "bg-transparent"
                 }`}
                 onClick={clickcontact}
               >
@@ -247,8 +276,8 @@ const Contact = () => {
         </ul>
       </div>
       <div>
-        <div className="flex bg-white h-[700px] w-screen ">
-          <form className="my-44 p-8 px-80 mx-[-35px]" onSubmit={handleSubmit}>
+        <div className="md:flex bg-white h-[700px] w-screen justify-between">
+          <form className="my-40 p-8 px-80 mx-[-165px]" onSubmit={handleSubmit}>
             <div className="flex space-x-1 " onSubmit={handlename}>
               <ul>
                 <h1 className="font-bold">Full Name</h1>
@@ -260,7 +289,9 @@ const Contact = () => {
                   required
                 />
                 {errorMessagename && (
-                  <p className="text-red-500 text-sm mb-2">{errorMessagename}</p>
+                  <p className="text-red-500 text-sm mb-2">
+                    {errorMessagename}
+                  </p>
                 )}
               </ul>
               <ul>
@@ -271,7 +302,11 @@ const Contact = () => {
                   onChange={(e) => setname(e.target.value)}
                   required
                 />
-                <p className="text-red-500 text-sm mb-2  ">{errorMessagename}</p>
+                {errorMessagename && (
+                  <p className="text-red-500 text-sm mb-2">
+                    {errorMessagename}
+                  </p>
+                )}
               </ul>
             </div>
             <ul>
@@ -282,9 +317,9 @@ const Contact = () => {
                 className="bg-slate-100 w-full h-8 rounded-md"
                 onChange={(e) => setEmail(e.target.value)}
                 required
-              /> 
-              {errorMessagename && (
-                <p className="text-red-500 text-sm mb-2">{errorMessagename}</p>
+              />
+              {errorMessageform && (
+                <p className="text-red-500 text-sm mb-2">{errorMessageform}</p>
               )}
             </ul>
             <ul>
@@ -307,7 +342,7 @@ const Contact = () => {
             </button>
           </form>
 
-          <div className="flex my-48  p-4 mx-[-200px] ">
+          <div className="flex my-48  p-4 mx-20">
             <div className="relative w-[630px] h-[440px]">
               <iframe
                 src="https://maps.google.com/maps?q=Zidio%20Development&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
@@ -323,7 +358,7 @@ const Contact = () => {
         <footer className="bg-gradient-to-b from-purple-400 to to-blue-200 w-full h-[620px]">
           <div className="md:flex">
             <div className="p-7 w-[450px] m-28 my-5 shadow-lg  ">
-              <div className="flex bg-red-600 w-96 space-x-10 p-4 rounded-sm mx-1 ">
+              <div className="flex bg-red-600 w-96 space-x-10 p-4 rounded-md mx-1 ">
                 <i className="fa-solid fa-comments text-red-600 bg-white rounded-xl px-2 text-2xl mx-5 "></i>
                 <h1 className="text-white text-2xl text-center font-bold font-mono ">
                   Let's Talk
@@ -348,7 +383,10 @@ const Contact = () => {
                   <h1 className="text-white tracking-wide">support@zidio.in</h1>
                 </ul>
               </div>
-              <div className="relative p-3 mx-5 " onSubmit={handleSubmitemail}>
+              <div
+                className="relative p-3 mx-5 "
+                onSubmit={handleSubmitemailinfooter}
+              >
                 <input
                   type="email"
                   placeholder="Enter Your E-mail..."
@@ -366,11 +404,11 @@ const Contact = () => {
                 )}
 
                 <button
-                  className="absolute inset-y-4 mx-52 text-xl flex items-center justify-center text-white bg-red-500 hover:bg-red-600 rounded-3xl p-4 px-5 py-5 h-9 font-thin "
+                  className="absolute inset-y-4 mx-52 text-xl flex items-center justify-center text-white bg-red-600 hover:bg-red-500 rounded-3xl p-4 px-5 py-5 h-9 font-thin "
                   type="submit"
                   onClick={handleSubmitemail}
                 >
-                  Subscribe
+                  <Link to="/contact">Subscribe</Link>
                 </button>
               </div>
             </div>
@@ -380,7 +418,7 @@ const Contact = () => {
                 <h1 className="text-3xl my-[-50px] tracking-widest">
                   Our Services
                 </h1>
-                <div className="absolute md:flex p-6 py-7  text-lg bg-purple-400 shadow-lg my-20 rounded-lg mx-1 text-center">
+                <div className="absolute md:flex p-6 py-6 text-lg bg-purple-400 shadow-lg my-20 rounded-lg mx-1 text-left">
                   <ul className="my-3 space-y-2 cursor-pointer">
                     <li
                       className="hover:text-white transition ease-in duration-300 "
@@ -446,7 +484,7 @@ const Contact = () => {
                 <h1 className="text-3xl my-[-50px] md:mx-3 tracking-widest">
                   Our Company
                 </h1>
-                <div className="absolute w-52 md:flex p-4 py-9 text-lg bg-purple-400 shadow-lg my-20 rounded-lg mx-5 text-center">
+                <div className="absolute w-52 md:flex text-lg bg-purple-400 shadow-lg my-20 rounded-lg mx-5 text-left">
                   <ul className="mx-10 space-y-2 cursor-pointer">
                     <li
                       className="hover:text-white transition ease-in duration-300 "
@@ -455,8 +493,11 @@ const Contact = () => {
                       <i class="fa-solid fa-arrow-right"></i>{" "}
                       <Link to="/about">About</Link>
                     </li>
-                    <li className="hover:text-white transition ease-in duration-300 ">
-                      <i class="fa-solid fa-arrow-right"></i> Our Team
+                    <li
+                      className="hover:text-white transition ease-in duration-300 "
+                      onClick={clickservices}
+                    >
+                      <i class="fa-solid fa-arrow-right"></i> Services
                     </li>
                     <li
                       className="hover:text-white transition ease-in duration-300 "
@@ -464,9 +505,6 @@ const Contact = () => {
                     >
                       <i class="fa-solid fa-arrow-right"></i>
                       <Link to="/contact">Contact</Link>
-                    </li>
-                    <li className="hover:text-white transition ease-in duration-300 ">
-                      <i class="fa-solid fa-arrow-right"></i> Careers
                     </li>
                   </ul>
                 </div>
