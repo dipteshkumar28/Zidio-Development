@@ -8,7 +8,6 @@ const Body = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [email, setEmail] = useState("");
-  // const [error, setError] = useState("");
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

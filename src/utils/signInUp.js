@@ -7,6 +7,7 @@ const SignInUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [phonenumbererror, setphonenumbererror] = useState("");
+  
 
   const [phonenumber, setphonenumber] = useState("");
   const validatenumber = (phonenumber) => {

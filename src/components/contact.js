@@ -111,11 +111,6 @@ const Contact = () => {
     setRecaptchaToken(null);
   };
 
-  // const handleReload = () => {
-  //   document.title = "Contact";
-  //   window.location.reload();  // Reloads the current page
-  // };
-
   const location = useLocation();
   useEffect(() => {
     if (location.pathname === "/") {
@@ -130,7 +125,6 @@ const Contact = () => {
   }, [location.pathname]);
 
   const clickabout = () => {
-    // document.title = "About Us";
     window.location.reload();
   };
 
@@ -143,7 +137,6 @@ const Contact = () => {
   };
 
   const clickhome = () => {
-    // document.title = "Home";
     window.location.reload();
   };
 
@@ -167,7 +160,7 @@ const Contact = () => {
     };
   }, []);
   const [loading, setloading] = useState(false);
-  // const navigate = useNavigate();
+ 
   useEffect(() => {
     const timer = setTimeout(() => {
       setloading(false); // Set loading to false after 2 seconds
@@ -485,7 +478,7 @@ const Contact = () => {
                   Our Company
                 </h1>
                 <div className="absolute w-52 md:flex text-lg bg-purple-400 shadow-lg my-20 rounded-lg mx-5 text-left">
-                  <ul className="mx-10 space-y-2 cursor-pointer">
+                  <ul className="mx-10 space-y-2 py-3 cursor-pointer">
                     <li
                       className="hover:text-white transition ease-in duration-300 "
                       onClick={clickabout}

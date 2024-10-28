@@ -25,24 +25,19 @@ const Header = () => {
     }
   }, [location.pathname]);
   const handleClick = () => {
-    // document.title = "SignIn/Up";
     window.location.reload();
   };
   const clickabout = () => {
-    // document.title = "About Us
     window.location.reload();
   };
   const clickservices = () => {
-    // document.title = "Services";
     window.location.reload();
   };
   const clickcontact = () => {
-    // document.title = "Contact";
     window.location.reload();
   };
 
   const clickhome = () => {
-    // document.title = "Home";
     window.location.reload();
   };
 

@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import Teamprofiles from "./teamprofile";
 import JobList from "../Joblistbackend/joblist";
 
-
-
 const About = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
@@ -92,7 +90,6 @@ const About = () => {
     window.location.reload();
   };
   const clickcontact = () => {
-
     window.location.reload();
   };
 
@@ -236,13 +233,12 @@ const About = () => {
             </div>
           ))}
         </div>
-        
-        
       </div>
-   <div>
-    
-    <div><Teamprofiles/></div>
-   </div>
+      <div>
+        <div>
+          <Teamprofiles />
+        </div>
+      </div>
       <footer className="bg-gradient-to-b from-purple-400 to to-blue-200 w-full h-[620px]">
         <div className="md:flex">
           <div className="p-7 w-[450px] m-28 my-5 shadow-lg  ">
@@ -378,8 +374,12 @@ const About = () => {
                     <i class="fa-solid fa-arrow-right"></i>{" "}
                     <Link to="/about">About</Link>
                   </li>
-                  <li className="hover:text-white transition ease-in duration-300 " onClick={clickservices}>
-                    <i class="fa-solid fa-arrow-right"></i> <Link to="/services">Services</Link>
+                  <li
+                    className="hover:text-white transition ease-in duration-300 "
+                    onClick={clickservices}
+                  >
+                    <i class="fa-solid fa-arrow-right"></i>{" "}
+                    <Link to="/services">Services</Link>
                   </li>
                   <li
                     className="hover:text-white transition ease-in duration-300 "
@@ -388,7 +388,6 @@ const About = () => {
                     <i class="fa-solid fa-arrow-right"></i>
                     <Link to="/contact">Contact</Link>
                   </li>
-              
                 </ul>
               </div>
             </div>
